@@ -3,7 +3,7 @@ resources:
 - name: source-code
   type: git
   source:
-    uri: https://github.com/Pivotal-Field-Engineering/pcf-ers-demo.git
+    uri: https://github.com/mwalburn/pcf-ers-demo.git
     branch: master
 
 - name: cf
