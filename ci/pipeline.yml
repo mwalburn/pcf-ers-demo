@@ -6,7 +6,7 @@ resources:
     uri: https://github.com/mwalburn/pcf-ers-demo.git
     branch: master
 
-- name: cf
+- name: pws-dev
   type: cf
   source:
     api: https://api.run.pivotal.io
@@ -17,14 +17,14 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: build
+- name: build-ers-demo-dev
   public: true
   plan:
   - get: source-code
     trigger: true
   - task: build
     file: source-code/ci/build.yml
-  - put: cf
+  - put: pws-dev
     params:
       manifest: source-code/manifest.yml
       path: build-output/pcf-ers-demo1-0.0.1-SNAPSHOT.jar
