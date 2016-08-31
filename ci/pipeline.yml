@@ -10,21 +10,46 @@ resources:
   type: cf
   source:
     api: https://api.run.pivotal.io
-    username: mwalburn@pivotal.io
-    password: pwsm4dr)(gl
+    username: {{cf_user}}
+    password: {{cf_pass}}
     organization: mwalburn
     space: development
     skip_cert_check: true
 
+- name: version
+  type: semver
+  source:
+    bucket: pcf-ers-demo
+    key: current-version
+    access_key_id: {{s3_access_key_id}}
+    secret_access_key: {{s3_secret_access_key}}
+    initial_version: 1.0.0
+
+- name: pcf-ers-demo-rc
+  type: s3
+  source:
+    bucket: pcf-ers-demo
+    regexp: pcf-ers-demo-(.*).tgz
+    access_key_id: {{s3_access_key_id}}
+    secret_access_key: {{s3_secret_access_key}}
+
 jobs:
 - name: build-ers-demo-dev
-  public: true
+#  public: true
+  serial_groups: [version]
   plan:
   - get: source-code
-    trigger: true
-  - task: build
+    trigger: false
+  - get: version
+    params: {pre: rc}
+  - task: build-artifact
     file: source-code/ci/build.yml
-  - put: pws-dev
-    params:
-      manifest: source-code/manifest.yml
-      path: build-output/pcf-ers-demo1-0.0.1-SNAPSHOT.jar
+  - put: pcf-ers-demo-rc
+    params: {file: target/pcf-ers-demo*.jar}
+  - put: version
+    params: {file: version/number}
+
+#  - put: pws-dev
+#    params:
+#      manifest: source-code/manifest.yml
+#      path: build-output/pcf-ers-demo1-0.0.1-SNAPSHOT.jar
