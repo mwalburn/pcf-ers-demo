@@ -45,7 +45,7 @@ jobs:
   - task: build-artifact
     file: source-code/ci/build.yml
   - put: pcf-ers-demo-rc
-    params: {file: target/pcf-ers-demo*.jar}
+    params: {file: build-output/pcf-ers-demo-*.jar}
   - put: version
     params: {file: version/number}
 
