@@ -3,7 +3,7 @@ applications:
 - name: mw-concourse
   host: mw-concourse
   memory: 512MB
-  instances: 1
+  instances: 3
   path: target/pcf-ers-demo1-0.0.1-SNAPSHOT.jar
 #  buildpack: java_buildpack
   services: []

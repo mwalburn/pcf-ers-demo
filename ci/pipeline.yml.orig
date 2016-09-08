@@ -21,7 +21,7 @@ jobs:
   public: true
   plan:
   - get: source-code
-    trigger: false
+    trigger: true
   - task: build
     file: source-code/ci/build.yml
   - put: pws-dev
