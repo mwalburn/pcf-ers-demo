@@ -11,7 +11,7 @@ resources:
   source:
     api: https://api.run.pivotal.io
     username: mwalburn@pivotal.io
-    password: pwsm4dr)(gl)
+    password: pwsm4dr)(gl
     organization: mwalburn
     space: development
     skip_cert_check: true
