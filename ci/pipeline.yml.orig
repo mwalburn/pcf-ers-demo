@@ -1,0 +1,20 @@
+---
+resources:
+- name: source-code
+  type: git
+  source:
+    uri: https://github.com/mwalburn/pcf-ers-demo.git
+    branch: master
+
+jobs:
+- name: build-ers-demo-dev
+  public: true
+  plan:
+  - get: source-code
+    trigger: false
+  - task: build
+    file: source-code/ci/build.yml
+  - put: pws-dev
+    params:
+      manifest: source-code/manifest.yml
+      path: build-output/pcf-ers-demo.jar
